@@ -29,6 +29,7 @@ public class Ant {
         this.y = y;
         this.dir = NORTH;
         this.id = id;
+
     }
 
     void goAnt(boolean isRight){
@@ -82,7 +83,8 @@ public class Ant {
 
     @Override
     public String toString(){
-        return id + " x: " + x + ", y: " + y;
+        return id;
     }
+
 
 }

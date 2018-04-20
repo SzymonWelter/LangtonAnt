@@ -1,11 +1,12 @@
 package controllers;
 
+import com.sun.javafx.scene.layout.region.Margins;
 import javaFiles.Ant;
 import javaFiles.Behavior;
 import javaFiles.Board;
 import javafx.animation.*;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
+import javafx.beans.binding.When;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 
 public class MainController {
@@ -38,7 +41,7 @@ public class MainController {
     private ListView<Ant> antList;
 
     @FXML
-    private Slider cycleSlider;
+    private Slider speedSlider;
 
     private ObservableList<Ant> observableAntList;
 
@@ -54,15 +57,15 @@ public class MainController {
 
     private static int width;
     private static int height;
-    private Integer cycle;
-
+    private int cycle;
+    private DoubleProperty speedProperty = new SimpleDoubleProperty(1);
 
     @FXML
     void initialize(){
         cycle = 0;
         numberOfAnts = 0;
         behavior = Behavior.getInstance();
-
+        speedSlider.valueProperty().bindBidirectional(speedProperty);
         ListProperty<Ant> antListProperty = new SimpleListProperty<>();
         observableAntList = FXCollections.observableArrayList();
         antListProperty.set(observableAntList);
@@ -77,11 +80,10 @@ public class MainController {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                for (int i = 0; i < cycleSlider.getValue(); i++){
+                for (int i = 0; i < speedProperty.getValue(); i++){
                     onUpdate();
-                    cycle++;
+                    cycleLabel.setText(String.valueOf(cycle++));
                 }
-                cycleLabel.setText(cycle.toString());
             }
         };
     }
@@ -128,7 +130,6 @@ public class MainController {
         timer.start();
     }
     public void stopSimulation(){
-
         timer.stop();
     }
 
