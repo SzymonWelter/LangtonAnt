@@ -1,7 +1,14 @@
 package javaFiles;
 
 import controllers.MainController;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+
 import static javaFiles.Ant.Direction.*;
 
 public class Ant {
@@ -84,6 +91,22 @@ public class Ant {
     @Override
     public String toString(){
         return id;
+    }
+
+    public void showAntProperties(){
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../fxml/AntProperties.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Ant properties");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
     }
 
 

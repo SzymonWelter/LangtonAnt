@@ -19,6 +19,8 @@ import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
+import java.awt.event.MouseEvent;
+
 
 public class MainController {
 
@@ -140,6 +142,17 @@ public class MainController {
         timer.stop();
         observableAntList.clear();
         gc.clearRect(2,2,height-3,width-3);
+    }
+
+    public void chooseAnt(javafx.scene.input.MouseEvent event){
+        timer.stop();
+        String result = event.getPickResult().getIntersectedNode().toString();
+        String[] tokens = result.split("'");
+        int i = 0;
+        while(!observableAntList.get(i).toString().equals(tokens[1]))
+            i++;
+
+        observableAntList.get(i).showAntProperties();
     }
 
     public static int getWidth() {

@@ -28,7 +28,7 @@
                                     <Font size="30.0" />
                                  </font>
                               </Label>
-                              <ListView fx:id="antList" prefHeight="200.0" prefWidth="228.0" />
+                              <ListView fx:id="antList" onMouseClicked="#chooseAnt" prefHeight="200.0" prefWidth="228.0" />
                               <Label fx:id="cycleLabel" VBox.vgrow="ALWAYS">
                                  <VBox.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
