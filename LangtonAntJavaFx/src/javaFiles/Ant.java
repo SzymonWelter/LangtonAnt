@@ -1,22 +1,33 @@
 package javaFiles;
 
+import controllers.BoardController;
 import controllers.MainController;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import sun.awt.SunHints;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import static javaFiles.Ant.Direction.*;
+import static javaFiles.Ant.Direction.NORTH;
 
 public class Ant {
 
+    public static final Direction DEFAULT_DIR = NORTH;
     private String id;
     private int x;
     private int y;
+    private Behavior behavior;
     private Direction dir;
+    private static BoardController boardController = BoardController.getInstance();
+
     enum Direction{
         NORTH(0,-1),
         EAST(1,0),
@@ -31,16 +42,31 @@ public class Ant {
 
     }
 
-    public Ant(int x, int y, String id){
-        this.x = x;
-        this.y = y;
+    public Ant(){
+        Random r = new Random();
+        this.x = r.nextInt();
+        this.y = r.nextInt();
         this.dir = NORTH;
-        this.id = id;
-
+        behavior = new Behavior();
     }
 
-    void goAnt(boolean isRight){
-        if(isRight){
+    public Ant(int x, int y){
+        this.x = x;
+        this.y = y;
+        this.dir = DEFAULT_DIR;
+        behavior = new Behavior();
+    }
+
+    public Ant(int x, int y, String id, Direction dir, Behavior behavior){
+        this.x = x;
+        this.y = y;
+        this.id = id;
+        this.dir = dir;
+        this.behavior = behavior;
+    }
+
+    public void spinAnt(){
+        if(behavior.getNextStep().equals('R')){
             spin(EAST, SOUTH, WEST, NORTH);
         }else{
             spin(WEST, NORTH, EAST, SOUTH);
@@ -78,36 +104,35 @@ public class Ant {
         y+=dir.vector.getY();
 
         if(x==0)
-            x = MainController.getWidth()-2;
-        else if(x==MainController.getWidth()-1)
+            x = boardController.getWidth()-2;
+        else if(x==boardController.getWidth()-1)
             x = 1;
 
         if(y==0)
-            y = MainController.getHeight() - 2;
-        else if(y == MainController.getHeight()-1)
+            y = boardController.getHeight() - 2;
+        else if(y == boardController.getHeight()-1)
             y=1;
     }
 
-    @Override
+    public Color getNewColor(Color boardColor) {
+        return behavior.getNextColor(boardColor);
+    }
+
+            @Override
     public String toString(){
         return id;
     }
 
-    public void showAntProperties(){
-
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/AntProperties.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Ant properties");
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.show();
-
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
+    public void setId(String id) {
+        this.id = id;
     }
 
+    public void setBehavior(Behavior behavior)
+    {
+        this.behavior = behavior;
+    }
 
+    public void setBehavior(String stringBehavior){
+        behavior.setStringBehavior(stringBehavior);
+    }
 }

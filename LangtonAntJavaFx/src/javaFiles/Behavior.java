@@ -2,36 +2,35 @@ package javaFiles;
 
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Behavior {
 
 
+    public static final String DEFAULT_BEHAVIOR = "LLRR";
+
     private String stringBehavior;
 
-    private final Color [] colorBehavior = new Color[]{ Color.WHITE,
-                Color.BLUE,Color.RED,Color.GREEN, Color.SEAGREEN,
-                Color.DARKKHAKI ,Color.VIOLET, Color.ALICEBLUE, Color.BROWN,
-                Color.GOLDENROD, Color.DARKGOLDENROD, Color.GREENYELLOW, Color.GOLDENROD, Color.CORAL,
-                Color.DARKORCHID, Color.FUCHSIA, Color.LIGHTSKYBLUE,Color.LEMONCHIFFON,
-                Color.MEDIUMAQUAMARINE
-    };
+    private List<Color> colorBehavior;
 
-    private static final Behavior instance = new Behavior();
+    private Character nextStep;
 
-    private Behavior(){
-        stringBehavior = "RL";
+    public Behavior(){
+        stringBehavior = DEFAULT_BEHAVIOR;
+        colorBehavior = new ArrayList<>();
+        colorBehavior.addAll(Arrays.asList(Color.WHITE,Color.BLUE,Color.RED, Color.GREEN,Color.YELLOW));
     }
 
-    public static Behavior getInstance(){
-       return instance;
-    }
-
-    public Color setNewPixelColor(Color color, Ant ant){
+    /*public Color setNewPixelColor(Color color, Ant ant){
         for(int i = 0; i < stringBehavior.length();i++) {
             if (colorBehavior[i].equals(color)) {
 
                 if (stringBehavior.charAt(i) == 'R') {
-                    ant.goAnt(true);
-                } else ant.goAnt(false);
+                    ant.spinAnt(true);
+                } else ant.spinAnt(false);
 
                 if (i + 1 < stringBehavior.length())
                     return colorBehavior[i + 1];
@@ -39,14 +38,23 @@ public class Behavior {
             }
         }
         if(stringBehavior.charAt(0) == 'R')
-            ant.goAnt(true);
-        else ant.goAnt(false);
+            ant.spinAnt(true);
+        else ant.spinAnt(false);
 
         return colorBehavior[0];
-    }
+    }*/
 
     public void setStringBehavior(String stringBehavior) {
         this.stringBehavior = stringBehavior;
     }
 
+    public Color getNextColor(Color oldColor) {
+        int newColorIndex = colorBehavior.indexOf(oldColor) + 1 < stringBehavior.length() ? colorBehavior.indexOf(oldColor) + 1 : 0;
+        nextStep = stringBehavior.charAt(newColorIndex);
+        return colorBehavior.get(newColorIndex);
+    }
+
+    public Character getNextStep() {
+        return nextStep;
+    }
 }
