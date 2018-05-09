@@ -56,7 +56,7 @@ public class BoardController {
         int height = Integer.parseInt(heightField.getText());
 
         board = new Board(width,height);
-        mainCanvas.setHeight(width);
+        mainCanvas.setWidth(width);
         mainCanvas.setHeight(height);
         gc.clearRect(0,0,width,height);
     }

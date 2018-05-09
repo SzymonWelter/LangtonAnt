@@ -1,6 +1,5 @@
 package controllers;
 
-import javaFiles.Board;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -77,14 +76,6 @@ public class GameController {
         antsController.clear();
         cycle.setValue(0);
     }
-
-     /*private void onUpdate(){
-          for(Ant ant: observableAntList){
-          board.setBoardColor(behavior.setNewPixelColor(board.getBoardColor(ant.getX(),ant.getY()),ant),ant.getX(),ant.getY());
-          gc.getPixelWriter().setColor(ant.getX(),ant.getY(),board.getBoardColor(ant.getX(),ant.getY()));
-          ant.goThrough();
-        }
-    }*/
 
 
 }

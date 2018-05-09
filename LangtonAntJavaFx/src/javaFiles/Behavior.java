@@ -10,7 +10,7 @@ import java.util.List;
 public class Behavior {
 
 
-    public static final String DEFAULT_BEHAVIOR = "LLRR";
+    public static final String DEFAULT_BEHAVIOR = "RL";
 
     private String stringBehavior;
 
@@ -21,28 +21,13 @@ public class Behavior {
     public Behavior(){
         stringBehavior = DEFAULT_BEHAVIOR;
         colorBehavior = new ArrayList<>();
-        colorBehavior.addAll(Arrays.asList(Color.WHITE,Color.BLUE,Color.RED, Color.GREEN,Color.YELLOW));
+        colorBehavior.addAll(Arrays.asList(Color.WHITE,Color.BLUE,Color.RED, Color.GREEN,
+                Color.YELLOW, Color.ORANGE,Color.VIOLET,Color.SEAGREEN,Color.FUCHSIA,
+                Color.GREY,Color.DARKRED,Color.DARKGREEN,Color.DARKBLUE, Color.DARKTURQUOISE,Color.TAN,
+                Color.PAPAYAWHIP,Color.BROWN, Color.DARKGOLDENROD,Color.KHAKI,Color.MAROON,
+                Color.SIENNA,Color.OLIVE,Color.DARKORANGE,Color.ROSYBROWN));
     }
 
-    /*public Color setNewPixelColor(Color color, Ant ant){
-        for(int i = 0; i < stringBehavior.length();i++) {
-            if (colorBehavior[i].equals(color)) {
-
-                if (stringBehavior.charAt(i) == 'R') {
-                    ant.spinAnt(true);
-                } else ant.spinAnt(false);
-
-                if (i + 1 < stringBehavior.length())
-                    return colorBehavior[i + 1];
-                else return colorBehavior[0];
-            }
-        }
-        if(stringBehavior.charAt(0) == 'R')
-            ant.spinAnt(true);
-        else ant.spinAnt(false);
-
-        return colorBehavior[0];
-    }*/
 
     public void setStringBehavior(String stringBehavior) {
         this.stringBehavior = stringBehavior;
@@ -56,5 +41,10 @@ public class Behavior {
 
     public Character getNextStep() {
         return nextStep;
+    }
+
+    @Override
+    public String toString(){
+        return stringBehavior;
     }
 }

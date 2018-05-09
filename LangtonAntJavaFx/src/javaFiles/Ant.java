@@ -13,17 +13,17 @@ import sun.awt.SunHints;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
 import java.util.Random;
 
 import static javaFiles.Ant.Direction.*;
 import static javaFiles.Ant.Direction.NORTH;
 
-public class Ant {
+public class Ant extends Observable {
 
     public static final Direction DEFAULT_DIR = NORTH;
     private String id;
-    private int x;
-    private int y;
+    private Point localization = new Point();
     private Behavior behavior;
     private Direction dir;
     private static BoardController boardController = BoardController.getInstance();
@@ -34,33 +34,32 @@ public class Ant {
         SOUTH(0,1),
         WEST(-1,0);
 
-        Point2D vector;
+        Point vector;
 
         Direction(int x, int y){
-            vector = new Point2D(x,y);
+            vector = new Point(x,y);
         }
 
     }
 
     public Ant(){
         Random r = new Random();
-        this.x = r.nextInt();
-        this.y = r.nextInt();
+        localization.setX(r.nextInt());
+        localization.setY(r.nextInt());
         this.dir = NORTH;
         behavior = new Behavior();
     }
 
     public Ant(int x, int y){
-        this.x = x;
-        this.y = y;
+        localization.setX(x);
+        localization.setY(y);
         this.dir = DEFAULT_DIR;
         behavior = new Behavior();
     }
 
     public Ant(int x, int y, String id, Direction dir, Behavior behavior){
-        this.x = x;
-        this.y = y;
-        this.id = id;
+        localization.setX(x);
+        localization.setY(y);
         this.dir = dir;
         this.behavior = behavior;
     }
@@ -91,34 +90,37 @@ public class Ant {
     }
 
     public int getX(){
-        return x;
+        return localization.getX();
     }
 
     public int getY(){
-        return y;
+        return localization.getY();
     }
 
     public void goThrough(){
 
-        x+=dir.vector.getX();
-        y+=dir.vector.getY();
+        localization.add(dir.vector);
 
-        if(x==0)
-            x = boardController.getWidth()-2;
-        else if(x==boardController.getWidth()-1)
-            x = 1;
+        if(localization.getX()==0)
+            localization.setX(boardController.getWidth()-2);
+        else if(localization.getX()==boardController.getWidth()-1)
+            localization.setX(1);
 
-        if(y==0)
-            y = boardController.getHeight() - 2;
-        else if(y == boardController.getHeight()-1)
-            y=1;
+        if(localization.getY()==0)
+            localization.setY(boardController.getHeight()-2);
+        else if(localization.getY()==boardController.getHeight()-1)
+            localization.setY(1);
+        setChanged();
+        notifyObservers();
+
     }
+
 
     public Color getNewColor(Color boardColor) {
         return behavior.getNextColor(boardColor);
     }
 
-            @Override
+    @Override
     public String toString(){
         return id;
     }
@@ -134,5 +136,9 @@ public class Ant {
 
     public void setBehavior(String stringBehavior){
         behavior.setStringBehavior(stringBehavior);
+    }
+
+    public Behavior getBehavior() {
+        return behavior;
     }
 }
