@@ -2,51 +2,62 @@ package javaFiles;
 
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Behavior {
 
 
+    public static String DEFAULT_BEHAVIOR = "RL";
+
     private String stringBehavior;
 
-    private final Color [] colorBehavior = new Color[]{ Color.WHITE,
-                Color.BLUE,Color.RED,Color.GREEN, Color.SEAGREEN,
-                Color.DARKKHAKI ,Color.VIOLET, Color.ALICEBLUE, Color.BROWN,
-                Color.GOLDENROD, Color.DARKGOLDENROD, Color.GREENYELLOW, Color.GOLDENROD, Color.CORAL,
-                Color.DARKORCHID, Color.FUCHSIA, Color.LIGHTSKYBLUE,Color.LEMONCHIFFON,
-                Color.MEDIUMAQUAMARINE
-    };
+    private List<Color> colorBehavior;
 
-    private static final Behavior instance = new Behavior();
+    private Character nextStep;
 
-    private Behavior(){
-        stringBehavior = "RL";
+    public Behavior(){
+        stringBehavior = DEFAULT_BEHAVIOR;
+        colorBehavior = new ArrayList<>();
+        colorBehavior.addAll(Arrays.asList(Color.WHITE,Color.BLUE,Color.RED, Color.GREEN,
+                Color.YELLOW, Color.ORANGE,Color.VIOLET,Color.SEAGREEN,Color.FUCHSIA,
+                Color.GREY,Color.DARKRED,Color.DARKGREEN,Color.DARKBLUE, Color.DARKTURQUOISE,Color.TAN,
+                Color.PAPAYAWHIP,Color.BROWN, Color.DARKGOLDENROD,Color.KHAKI,Color.MAROON,
+                Color.SIENNA,Color.OLIVE,Color.DARKORANGE,Color.ROSYBROWN));
     }
 
-    public static Behavior getInstance(){
-       return instance;
-    }
-
-    public Color setNewPixelColor(Color color, Ant ant){
-        for(int i = 0; i < stringBehavior.length();i++) {
-            if (colorBehavior[i].equals(color)) {
-
-                if (stringBehavior.charAt(i) == 'R') {
-                    ant.goAnt(true);
-                } else ant.goAnt(false);
-
-                if (i + 1 < stringBehavior.length())
-                    return colorBehavior[i + 1];
-                else return colorBehavior[0];
-            }
-        }
-        if(stringBehavior.charAt(0) == 'R')
-            ant.goAnt(true);
-        else ant.goAnt(false);
-
-        return colorBehavior[0];
-    }
 
     public void setStringBehavior(String stringBehavior) {
         this.stringBehavior = stringBehavior;
     }
 
+    public Color getNextColor(Color oldColor) {
+        int newColorIndex = colorBehavior.indexOf(oldColor) + 1 < stringBehavior.length() ? colorBehavior.indexOf(oldColor) + 1 : 0;
+        nextStep = stringBehavior.charAt(newColorIndex);
+        return colorBehavior.get(newColorIndex);
+    }
+
+    public Character getNextStep() {
+        return nextStep;
+    }
+
+    @Override
+    public String toString(){
+        return stringBehavior;
+    }
+
+    public Color getColorBehavior(int index)
+    {
+        return colorBehavior.get(index);
+    }
+
+    public static String getDefaultBehavior() {
+        return DEFAULT_BEHAVIOR;
+    }
+
+    public static void setDefaultBehavior(String defaultBehavior) {
+        DEFAULT_BEHAVIOR = defaultBehavior;
+    }
 }
