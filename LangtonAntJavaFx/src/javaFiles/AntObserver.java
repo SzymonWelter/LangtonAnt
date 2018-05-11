@@ -10,10 +10,8 @@ public class AntObserver implements Observer {
 
     private AntsController antsController = AntsController.getInstance();
 
-    private Ant observableAnt = null;
 
     public AntObserver(Ant observableAnt){
-        this.observableAnt = observableAnt;
         antsController.showAntProperties(observableAnt);
     }
 

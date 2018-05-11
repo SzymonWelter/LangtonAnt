@@ -10,7 +10,7 @@
       <Button fx:id="startAndStopButton" layoutX="291.0" layoutY="125.0" mnemonicParsing="false" onAction="#theGame" text="Start" />
       <Button fx:id="resetButton" layoutX="169.0" layoutY="125.0" mnemonicParsing="false" onAction="#resetGame" text="Reset" />
       <Button fx:id="saveButton" layoutX="50.0" layoutY="125.0" mnemonicParsing="false" text="Save" />
-      <Slider fx:id="speedSlider" layoutX="127.0" layoutY="62.0" max="5000.0" min="1.0" />
+      <Slider fx:id="speedSlider" layoutX="127.0" layoutY="62.0" max="4000.0" min="1.0" />
       <Label fx:id="cycleLabel" layoutX="179.0" layoutY="23.0" />
    </children>
 </AnchorPane>

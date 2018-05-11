@@ -25,20 +25,23 @@ public class GameController {
     private Button startAndStopButton;
 
     @FXML
-    private Button resetButton;
-
-    @FXML
-    private Button saveButton;
-
-    @FXML
     private Label cycleLabel;
 
     private AntsController antsController;
 
     private AnimationTimer timer;
 
+    private static GameController instance;
+
+    public static GameController getInstance(){
+        return instance;
+    }
+
     @FXML
     public void initialize(){
+
+        instance = this;
+
         cycle = new SimpleIntegerProperty(0);
         speedProperty = new SimpleDoubleProperty(1);
         speedSlider.valueProperty().bindBidirectional(speedProperty);
@@ -72,6 +75,7 @@ public class GameController {
 
     public void resetGame(){
         timer.stop();
+        startAndStopButton.setText("Start");
         BoardController.getInstance().clear();
         antsController.clear();
         cycle.setValue(0);

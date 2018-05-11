@@ -52,8 +52,10 @@ public class BoardController {
     @FXML
     public void setNewSizeOfBoard(){
 
-        int width = Integer.parseInt(widthField.getText());
-        int height = Integer.parseInt(heightField.getText());
+        GameController.getInstance().resetGame();
+
+        int width = Integer.parseInt(widthField.getText()) + 2;
+        int height = Integer.parseInt(heightField.getText()) + 2;
 
         board = new Board(width,height);
         mainCanvas.setWidth(width);

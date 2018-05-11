@@ -10,7 +10,7 @@ import java.util.List;
 public class Behavior {
 
 
-    public static final String DEFAULT_BEHAVIOR = "RL";
+    public static String DEFAULT_BEHAVIOR = "RL";
 
     private String stringBehavior;
 
@@ -46,5 +46,18 @@ public class Behavior {
     @Override
     public String toString(){
         return stringBehavior;
+    }
+
+    public Color getColorBehavior(int index)
+    {
+        return colorBehavior.get(index);
+    }
+
+    public static String getDefaultBehavior() {
+        return DEFAULT_BEHAVIOR;
+    }
+
+    public static void setDefaultBehavior(String defaultBehavior) {
+        DEFAULT_BEHAVIOR = defaultBehavior;
     }
 }

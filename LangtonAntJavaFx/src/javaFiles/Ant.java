@@ -28,6 +28,8 @@ public class Ant extends Observable {
     private Direction dir;
     private static BoardController boardController = BoardController.getInstance();
 
+
+
     enum Direction{
         NORTH(0,-1),
         EAST(1,0),
@@ -110,9 +112,12 @@ public class Ant extends Observable {
             localization.setY(boardController.getHeight()-2);
         else if(localization.getY()==boardController.getHeight()-1)
             localization.setY(1);
+
+    }
+
+    public void refresh() {
         setChanged();
         notifyObservers();
-
     }
 
 
@@ -140,5 +145,9 @@ public class Ant extends Observable {
 
     public Behavior getBehavior() {
         return behavior;
+    }
+
+    public void setBehavior() {
+        behavior.setStringBehavior(Behavior.getDefaultBehavior());
     }
 }
