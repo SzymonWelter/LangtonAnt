@@ -1,211 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
-   <children>
-      <HBox layoutX="490.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <AnchorPane>
          <children>
-            <VBox prefHeight="800.0" prefWidth="494.0">
-               <children>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="290.0" prefWidth="556.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="370.0" prefWidth="250.0" style="-fx-border-color: BLACK;" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label text="Ants">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Label>
-                              <ListView fx:id="antList" onMouseClicked="#chooseAnt" prefHeight="200.0" prefWidth="228.0" />
-                              <Label fx:id="cycleLabel" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                        <VBox alignment="TOP_CENTER" layoutX="319.0" layoutY="14.0" style="-fx-border-color: BLACK;" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label alignment="CENTER" prefHeight="15.0" prefWidth="151.0" text="Board" textAlignment="CENTER" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Height">
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="heightField" maxWidth="150.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Label text="Width">
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <TextField fx:id="widthField" maxWidth="150.0">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </TextField>
-                              <Button mnemonicParsing="false" onAction="#setCanvas" text="Set values">
-                                 <VBox.margin>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </VBox.margin>
-                              </Button>
-                           </children>
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <VBox prefHeight="500.0" prefWidth="473.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="290.0" prefWidth="492.0" style="-fx-border-color: BLACK;" VBox.vgrow="ALWAYS">
-                           <children>
-                              <Label alignment="TOP_CENTER" text="Behavior" VBox.vgrow="ALWAYS">
-                                 <font>
-                                    <Font size="30.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </Label>
-                              <ScrollPane prefHeight="188.0" prefWidth="471.0" VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </ScrollPane>
-                              <Label text="Set behavior" />
-                              <HBox VBox.vgrow="ALWAYS">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" />
-                                 </VBox.margin>
-                                 <children>
-                                    <TextField fx:id="behaviorTextField" HBox.hgrow="ALWAYS">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Button mnemonicParsing="false" onAction="#setStringBehavior" text="Set behavior" HBox.hgrow="ALWAYS">
-                                       <HBox.margin>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: BLACK;" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                           <children>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Button mnemonicParsing="false" text="Save">
-                                       <font>
-                                          <Font size="20.0" />
-                                       </font>
-                                    </Button>
-                                 </children>
-                              </VBox>
-                              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
-                                 <children>
-                                    <Button fx:id="startButton" mnemonicParsing="false" onAction="#startSimulation" prefHeight="50.0" prefWidth="100.0" text="Start" VBox.vgrow="ALWAYS">
-                                       <font>
-                                          <Font size="25.0" />
-                                       </font>
-                                       <VBox.margin>
-                                          <Insets bottom="20.0" />
-                                       </VBox.margin>
-                                    </Button>
-                                    <HBox alignment="CENTER">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#stopSimulation" prefWidth="85.0" text="Stop" VBox.vgrow="ALWAYS">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                             <VBox.margin>
-                                                <Insets bottom="10.0" />
-                                             </VBox.margin>
-                                             <HBox.margin>
-                                                <Insets right="5.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                          <Button mnemonicParsing="false" onAction="#reset" prefWidth="85.0" text="Reset">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                             <HBox.margin>
-                                                <Insets left="5.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
-               </children>
-            </VBox>
-            <VBox>
-               <children>
-                  <ScrollPane prefHeight="774.0" prefWidth="702.0">
-                     <content>
-                        <Canvas fx:id="mainCanvas" height="270.0" onMouseClicked="#onMouseClicked" width="272.0" />
-                     </content>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </VBox.margin>
-                  </ScrollPane>
-                  <HBox>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label text="Speed of ants" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Slider fx:id="speedSlider" max="5000.0" maxWidth="300.0" min="1.0" prefHeight="16.0" prefWidth="300.0" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </HBox.margin>
-                        </Slider>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
+            <MenuBar prefHeight="30.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
          </children>
-      </HBox>
-   </children>
-</AnchorPane>
+      </AnchorPane>
+   </top>
+  <left>
+    <VBox prefHeight="675.0" prefWidth="400.0">
+       <children>
+         <fx:include fx:id="antsComponent" source="AntsComponent.fxml" />
+         <fx:include fx:id="gameComponent" source="GameComponent.fxml" />
+       </children>
+    </VBox>
+  </left>
+  <center>
+    <fx:include fx:id="board" source="Board.fxml" />
+  </center>
+</BorderPane>
