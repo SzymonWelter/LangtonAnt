@@ -1,11 +1,10 @@
 package javaFiles;
 
+
 public class Point {
 
     private int x;
     private int y;
-
-    public Point(){}
 
     public Point(int x, int y){
         this.x = x;
@@ -16,6 +15,7 @@ public class Point {
         this.x += point.getX();
         this.y += point.getY();
     }
+
 
     public String toString(){
         return "x: " + x + ", y: " + y;

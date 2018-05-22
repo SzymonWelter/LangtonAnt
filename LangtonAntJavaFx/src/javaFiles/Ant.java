@@ -1,92 +1,113 @@
 package javaFiles;
 
 import controllers.BoardController;
-import controllers.MainController;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import sun.awt.SunHints;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Random;
 
 import static javaFiles.Ant.Direction.*;
-import static javaFiles.Ant.Direction.NORTH;
 
 public class Ant extends Observable {
 
-    public static final Direction DEFAULT_DIR = NORTH;
+    public static final Direction DEFAULT_DIR = N;
     private String id;
-    private Point localization = new Point();
+    private Point localization;
     private Behavior behavior;
     private Direction dir;
     private static BoardController boardController = BoardController.getInstance();
 
 
 
+
     enum Direction{
-        NORTH(0,-1),
-        EAST(1,0),
-        SOUTH(0,1),
-        WEST(-1,0);
+        N(new Point(0,-1)),
+        E(new Point(1,0)),
+        S(new Point(0,1)),
+        W(new Point(-1,0));
 
         Point vector;
 
-        Direction(int x, int y){
-            vector = new Point(x,y);
+        Direction(Point point){
+            vector = point;
         }
 
+        @Override
+        public String toString(){
+            if(vector.getX() == 1)
+                return E.name();
+            else if(vector.getX() == -1)
+                return W.name();
+            else if(vector.getY() == 1)
+                return S.name();
+            else
+                return N.name();
+        }
     }
 
     public Ant(){
-        Random r = new Random();
-        localization.setX(r.nextInt());
-        localization.setY(r.nextInt());
-        this.dir = NORTH;
-        behavior = new Behavior();
+        Random random = new Random();
+        this.localization = new Point(random.nextInt(boardController.getWidth()),random.nextInt(boardController.getHeight()));
+        setRandomDirection();
+        this.behavior = new Behavior();
     }
 
+
+
     public Ant(int x, int y){
-        localization.setX(x);
-        localization.setY(y);
-        this.dir = DEFAULT_DIR;
+        localization = new Point(x,y);
+        setRandomDirection();
         behavior = new Behavior();
     }
 
     public Ant(int x, int y, String id, Direction dir, Behavior behavior){
-        localization.setX(x);
-        localization.setY(y);
+        this.id = id;
+        this.localization = new Point(x,y);
         this.dir = dir;
         this.behavior = behavior;
     }
 
-    public void spinAnt(){
-        if(behavior.getNextStep().equals('R')){
-            spin(EAST, SOUTH, WEST, NORTH);
-        }else{
-            spin(WEST, NORTH, EAST, SOUTH);
+    public void spinAnt() {
+
+        if (behavior.getNextStep() == 'R' || behavior.getNextStep() == 'r')
+            spin(E, S, W, N);
+        else
+            spin(W, N, E, S);
+
+    }
+
+    protected void spin(Direction chN, Direction chE, Direction chS, Direction chW) {
+        switch(dir) {
+            case N:
+                dir = chN;
+                break;
+            case E:
+                dir =  chE;
+                break;
+            case S:
+                dir = chS;
+                break;
+            case W:
+                dir = chW;
+                break;
         }
     }
 
-    private void spin(Direction changeNorth, Direction changeEast, Direction changeSouth, Direction changeWest) {
-        switch(dir) {
-            case NORTH:
-                dir = changeNorth;
+    private void setRandomDirection() {
+        Random random = new Random();
+        int dirNo = random.nextInt(4);
+        switch (dirNo){
+            case 0:
+                dir = N;
                 break;
-            case EAST:
-                dir =  changeEast;
+            case 1:
+                dir = E;
                 break;
-            case SOUTH:
-                dir = changeSouth;
+            case 2:
+                dir = S;
                 break;
-            case WEST:
-                dir = changeWest;
+            case 3:
+                dir = W;
                 break;
         }
     }
@@ -99,7 +120,7 @@ public class Ant extends Observable {
         return localization.getY();
     }
 
-    public void goThrough(){
+    public void antStep(){
 
         localization.add(dir.vector);
 
@@ -134,20 +155,38 @@ public class Ant extends Observable {
         this.id = id;
     }
 
-    public void setBehavior(Behavior behavior)
-    {
-        this.behavior = behavior;
-    }
-
-    public void setBehavior(String stringBehavior){
-        behavior.setStringBehavior(stringBehavior);
-    }
-
     public Behavior getBehavior() {
         return behavior;
     }
 
-    public void setBehavior() {
-        behavior.setStringBehavior(Behavior.getDefaultBehavior());
+    public void setBehavior(String stringBehavior) {
+        behavior.setStringBehavior(stringBehavior);
+    }
+
+    public void setLocalization(int x, int y) {
+        this.localization = new Point(x,y);
+    }
+
+    public String getDir() {
+        return dir.toString();
+    }
+
+    public void setDirection(String direction) {
+        switch (direction){
+            case "N":
+                dir = N;
+                break;
+            case "E":
+                dir = E;
+                break;
+            case "S":
+                dir = S;
+                break;
+            case "W":
+                dir = W;
+                break;
+            default:
+                dir = DEFAULT_DIR;
+        }
     }
 }

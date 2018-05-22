@@ -7,9 +7,10 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -22,6 +23,12 @@ import javafx.util.converter.NumberStringConverter;
 public class AntsController{
 
     private static AntsController instance;
+    public Button editButton;
+    public TextField antDirectionTextField;
+
+
+    private int numOfAnts = 0;
+
     private Ant observableAnt;
 
     public AntsController(){
@@ -35,6 +42,25 @@ public class AntsController{
     private BoardController boardController;
 
     private AntObserver antObserver;
+
+    @FXML
+    public TextField idTextField;
+
+    @FXML
+    public TextField paramXTextField;
+
+    @FXML
+    public TextField paramYTextField;
+
+    @FXML
+    public TextField behaviorAntTextField;
+
+    @FXML
+    public Button removeAntButton;
+
+    @FXML
+    private Label antDirection;
+    private StringProperty antDirectionProperty = new SimpleStringProperty();
 
     @FXML
     private Label antId;
@@ -61,6 +87,9 @@ public class AntsController{
     @FXML
     private Canvas canvaBehavior;
 
+    @FXML
+    private TextField randomAntsNo;
+
     private GraphicsContext gc;
 
     private static ObservableList<Ant> observableAntList;
@@ -68,8 +97,8 @@ public class AntsController{
     @FXML
     public void initialize(){
 
-        ListProperty<Ant> antListProperty = new SimpleListProperty<>();
         observableAntList = FXCollections.observableArrayList();
+        ListProperty<Ant> antListProperty = new SimpleListProperty<>();
         antListProperty.set(observableAntList);
         antListView.itemsProperty().bindBidirectional(antListProperty);
 
@@ -79,6 +108,8 @@ public class AntsController{
         paramX.textProperty().bindBidirectional(paramXProperty,converter);
         paramY.textProperty().bindBidirectional(paramYProperty,converter);
         antBehavior.textProperty().bindBidirectional(antBehaviorProperty);
+        antDirection.textProperty().bindBidirectional(antDirectionProperty);
+
 
         gc = canvaBehavior.getGraphicsContext2D();
 
@@ -123,8 +154,19 @@ public class AntsController{
         }
     }
 
-    public static void addAntToList(Ant ant){
-        ant.setId("#" + String.valueOf(observableAntList.size() + 1));
+    public void addRandomAnts(){
+        int n = 0;
+        try {
+            n = Integer.parseInt(randomAntsNo.getText());
+        }catch (NumberFormatException e){
+
+        }
+        for(int i = 0; i < n; i++ )
+            addAntToList(new Ant());
+    }
+
+    public void addAntToList(Ant ant){
+        ant.setId("#" + ++numOfAnts);
         observableAntList.add(ant);
     }
 
@@ -132,7 +174,7 @@ public class AntsController{
         for (Ant ant: observableAntList ) {
             boardController.setNewPixelColor(ant);
             ant.spinAnt();
-            ant.goThrough();
+            ant.antStep();
             ant.refresh();
         }
     }
@@ -141,10 +183,55 @@ public class AntsController{
         this.boardController = boardController;
     }
 
+    public void editButtonOnAction(){
+        GameController.getInstance().stopGame();
+        if(editButton.getText().equals("Edit"))
+            editMode();
+        else{
+            normalMode();
+            editAnt();
+            observableAnt.refresh();
+            antListView.getItems().set(antListView.getSelectionModel().getSelectedIndex(),antListView.getSelectionModel().getSelectedItem());
+        }
+    }
+
+    private void normalMode() {
+        setVisible(antDirectionTextField, antDirection);
+        setVisible(paramYTextField, paramY);
+        setVisible(paramXTextField, paramX);
+        setVisible(behaviorAntTextField, antBehavior);
+        setVisible(idTextField,antId);
+        editButton.setText("Edit");
+    }
+
+    private void editMode() {
+        setVisible(antId, idTextField);
+        setVisible(antBehavior, behaviorAntTextField);
+        setVisible(paramX, paramXTextField);
+        setVisible(paramY, paramYTextField);
+        setVisible(antDirection, antDirectionTextField);
+        editButton.setText("Set");
+    }
+
+    private void setVisible(Node visible, Node notVisible) {
+        if(notVisible instanceof TextField && visible instanceof Label)
+            ((TextField) notVisible).setText(((Label) visible).getText());
+
+        visible.setVisible(false);
+        notVisible.setVisible(true);
+    }
+
+    private void editAnt(){
+        observableAnt.setId(idTextField.getText());
+        observableAnt.setBehavior(behaviorAntTextField.getText());
+        observableAnt.setLocalization(Integer.parseInt(paramXTextField.getText()), Integer.parseInt(paramYTextField.getText()));
+        observableAnt.setDirection(antDirectionTextField.getText());
+    }
+
     public void changeBehavior(){
-        Behavior.setDefaultBehavior(globalBehaviorTextField.getText());
+        String newBehavior = globalBehaviorTextField.getText();
         for (Ant ant:observableAntList) {
-            ant.setBehavior();
+            ant.setBehavior(newBehavior);
             ant.refresh();
         }
     }
@@ -156,6 +243,7 @@ public class AntsController{
         paramXProperty.setValue(ant.getX());
         paramYProperty.setValue((ant.getY()));
         antBehaviorProperty.setValue(ant.getBehavior().toString());
+        antDirectionProperty.setValue(ant.getDir());
     }
 
     public void checkedAnt(){
@@ -167,12 +255,22 @@ public class AntsController{
     }
 
     public void clear() {
+        numOfAnts = 0;
         observableAntList.clear();
-        globalBehaviorTextField.setText("RL");
+        clearProperties();
+    }
+
+    private void clearProperties() {
+        antId.setText("");
         paramX.setText("");
         paramY.setText("");
         antBehavior.setText("");
-        antId.setText("");
+        antDirection.setText("");
+    }
+
+    public void removeAnt(){
+        observableAntList.remove(antListView.getSelectionModel().getSelectedItem());
+        clearProperties();
     }
 
 }

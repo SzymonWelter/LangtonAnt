@@ -1,11 +1,6 @@
 package javaFiles;
 
 import controllers.AntsController;
-<<<<<<< HEAD
-=======
-import javafx.beans.value.ObservableValue;
->>>>>>> 2f2ca34afab785e2cf1f52a446b8832852a5a527
-
 import java.util.Observable;
 import java.util.Observer;
 

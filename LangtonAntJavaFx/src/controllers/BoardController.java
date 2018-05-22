@@ -27,11 +27,12 @@ public class BoardController {
     private static final int START_BOARD_HEIGHT = 602;
 
     private static BoardController instance;
+    private AntsController antsController = AntsController.getInstance();
 
     public BoardController()
     {
         instance = this;
-        AntsController.getInstance().setBoardController(this);
+        antsController.setBoardController(this);
     }
     public static BoardController getInstance(){
         return instance;
@@ -43,16 +44,17 @@ public class BoardController {
         board = new Board(START_BOARD_WIDTH, START_BOARD_HEIGHT);
         mainCanvas.setWidth(START_BOARD_WIDTH);
         mainCanvas.setHeight(START_BOARD_HEIGHT);
+        gc.strokeRect(0,0,START_BOARD_WIDTH,START_BOARD_HEIGHT);
     }
 
     public void onMouseClicked(javafx.scene.input.MouseEvent e){
-        AntsController.addAntToList(new Ant((int)e.getX(),(int)e.getY()));
+        antsController.addAntToList(new Ant((int)e.getX(),(int)e.getY()));
     }
 
     @FXML
     public void setNewSizeOfBoard(){
 
-        GameController.getInstance().resetGame();
+        GameController.getInstance().stopAndClearAnts();
 
         int width = Integer.parseInt(widthField.getText()) + 2;
         int height = Integer.parseInt(heightField.getText()) + 2;
@@ -61,6 +63,7 @@ public class BoardController {
         mainCanvas.setWidth(width);
         mainCanvas.setHeight(height);
         gc.clearRect(0,0,width,height);
+        gc.strokeRect(0,0,width,height);
     }
 
     public void setNewPixelColor(Ant ant){
@@ -82,6 +85,8 @@ public class BoardController {
     public void clear() {
         board = new Board(board.getWidth(),board.getHeight());
         gc.clearRect(0,0,board.getWidth(),board.getHeight());
+        gc.strokeRect(0,0,board.getWidth(),board.getHeight());
     }
+
 }
 

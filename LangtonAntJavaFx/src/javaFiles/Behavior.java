@@ -2,7 +2,6 @@ package javaFiles;
 
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -59,5 +58,9 @@ public class Behavior {
 
     public static void setDefaultBehavior(String defaultBehavior) {
         DEFAULT_BEHAVIOR = defaultBehavior;
+    }
+
+    public String getStringBehavior() {
+        return stringBehavior;
     }
 }

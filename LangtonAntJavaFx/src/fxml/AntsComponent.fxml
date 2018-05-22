@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -9,10 +10,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="400.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AntsController">
+<AnchorPane prefHeight="475.0" prefWidth="400.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AntsController">
    <children>
       <Label alignment="CENTER" layoutX="182.0" layoutY="14.0" text="Ants" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
          <font>
@@ -20,43 +23,77 @@
          </font>
       </Label>
       <ListView fx:id="antListView" layoutX="14.0" layoutY="45.0" onMouseClicked="#checkedAnt" prefHeight="200.0" prefWidth="153.0" AnchorPane.leftAnchor="10.0" />
-      <Label alignment="CENTER" layoutX="-1.0" layoutY="250.0" prefHeight="15.0" prefWidth="400.0" text="Global behavior" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <Label alignment="CENTER" layoutX="5.0" layoutY="297.0" prefHeight="15.0" prefWidth="400.0" text="Global behavior" textAlignment="CENTER" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="globalBehaviorTextField" layoutX="10.0" layoutY="352.0" prefHeight="25.0" prefWidth="206.0" />
-      <Button layoutX="258.0" layoutY="352.0" mnemonicParsing="false" onAction="#changeBehavior" prefHeight="25.0" prefWidth="105.0" text="Set behavior" />
-      <GridPane layoutX="178.0" layoutY="45.0" prefHeight="200.0" prefWidth="220.0" style="-fx-border-color: BLACK;" AnchorPane.rightAnchor="11.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="CENTER" maxWidth="92.0" minWidth="10.0" prefWidth="72.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="148.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-          <RowConstraints vgrow="SOMETIMES" />
-        </rowConstraints>
+      <TextField fx:id="globalBehaviorTextField" layoutX="14.0" layoutY="409.0" prefHeight="26.0" prefWidth="211.0" />
+      <Button layoutX="285.0" layoutY="409.0" mnemonicParsing="false" onAction="#changeBehavior" text="Set behavior" />
+      <VBox layoutX="168.0" layoutY="45.0">
          <children>
-            <Label text="ID:" />
-            <Label text="x:" GridPane.rowIndex="1" />
-            <Label text="y:" GridPane.rowIndex="2" />
-            <Label text="Behavior:" GridPane.rowIndex="3" />
-            <Label fx:id="antId" GridPane.columnIndex="1" />
-            <Label fx:id="paramX" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="paramY" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="antBehavior" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="idTextField" visible="false" GridPane.columnIndex="1" />
-            <TextField fx:id="paramXTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="paramYTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="behaviorAntTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <GridPane layoutX="178.0" layoutY="45.0" prefHeight="200.0" prefWidth="218.0" styleClass="grid" stylesheets="@../CSS/Stylesheet.css" AnchorPane.rightAnchor="11.0" VBox.vgrow="ALWAYS">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" maxWidth="108.0" minWidth="10.0" prefWidth="79.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="139.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints vgrow="SOMETIMES" />
+                <RowConstraints vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="ID:" />
+                  <Label text="x:" GridPane.rowIndex="1" />
+                  <Label text="y:" GridPane.rowIndex="2" />
+                  <Label text="Behavior:" GridPane.rowIndex="3" />
+                  <Label fx:id="antId" GridPane.columnIndex="1" />
+                  <Label fx:id="paramX" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label fx:id="paramY" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="antBehavior" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="idTextField" visible="false" GridPane.columnIndex="1" />
+                  <TextField fx:id="paramXTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="paramYTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="behaviorAntTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Button fx:id="removeAntButton" mnemonicParsing="false" onAction="#removeAnt" text="Remove Ant" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Button>
+                  <Label text="Direction:" GridPane.rowIndex="4" />
+                  <Label fx:id="antDirection" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonOnAction" text="Edit" GridPane.rowIndex="5" />
+                  <TextField fx:id="antDirectionTextField" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               </children>
+            </GridPane>
          </children>
-      </GridPane>
-      <ScrollPane layoutX="13.0" layoutY="275.0" prefHeight="65.0" prefWidth="375.0">
+      </VBox>
+      <ScrollPane layoutX="13.0" layoutY="330.0" prefHeight="65.0" prefWidth="375.0">
          <content>
             <Canvas fx:id="canvaBehavior" height="60.0" width="200.0" />
          </content>
       </ScrollPane>
+      <HBox layoutX="20.0" layoutY="251.0">
+         <children>
+            <Label text="Number of random ants:" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="randomAntsNo" prefHeight="25.0" prefWidth="49.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" onAction="#addRandomAnts" text="Add random ants" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

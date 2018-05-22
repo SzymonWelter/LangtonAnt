@@ -5,12 +5,14 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="275.0" prefWidth="400.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
+<AnchorPane prefHeight="200.0" prefWidth="400.0" style="-fx-border-color: BLACK;" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GameController">
    <children>
-      <Button fx:id="startAndStopButton" layoutX="291.0" layoutY="125.0" mnemonicParsing="false" onAction="#theGame" text="Start" />
-      <Button fx:id="resetButton" layoutX="169.0" layoutY="125.0" mnemonicParsing="false" onAction="#resetGame" text="Reset" />
-      <Button fx:id="saveButton" layoutX="50.0" layoutY="125.0" mnemonicParsing="false" text="Save" />
-      <Slider fx:id="speedSlider" layoutX="127.0" layoutY="62.0" max="4000.0" min="1.0" />
-      <Label fx:id="cycleLabel" layoutX="179.0" layoutY="23.0" />
+      <Button fx:id="startAndStopButton" layoutX="227.0" layoutY="88.0" mnemonicParsing="false" onAction="#theGame" prefHeight="45.0" prefWidth="83.0" text="Start" />
+      <Button fx:id="resetButton" layoutX="282.0" layoutY="146.0" mnemonicParsing="false" onAction="#resetGame" text="Reset" />
+      <Button fx:id="saveButton" layoutX="65.0" layoutY="75.0" mnemonicParsing="false" text="Save" />
+      <Slider fx:id="speedSlider" layoutX="199.0" layoutY="59.0" max="4000.0" min="1.0" />
+      <Label fx:id="cycleLabel" layoutX="245.0" layoutY="43.0" prefHeight="16.0" />
+      <Button layoutX="200.0" layoutY="146.0" mnemonicParsing="false" onAction="#clear" text="Clear" />
+      <Label layoutX="245.0" layoutY="27.0" text="Cycles:" />
    </children>
 </AnchorPane>

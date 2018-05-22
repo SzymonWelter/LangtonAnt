@@ -1,5 +1,6 @@
 package controllers;
 
+import javaFiles.Board;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -33,12 +34,12 @@ public class GameController {
 
     private static GameController instance;
 
-    public static GameController getInstance(){
+    public static GameController getInstance() {
         return instance;
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() {
 
         instance = this;
 
@@ -48,7 +49,7 @@ public class GameController {
 
         antsController = AntsController.getInstance();
         StringConverter converter = new NumberStringConverter();
-        cycleLabel.textProperty().bindBidirectional(cycle,converter);
+        cycleLabel.textProperty().bindBidirectional(cycle, converter);
 
         timer = new AnimationTimer() {
             @Override
@@ -61,25 +62,36 @@ public class GameController {
         };
     }
 
-    public void theGame(){
+    public void theGame() {
 
-        if(startAndStopButton.getText().equals("Start")){
+        if (startAndStopButton.getText().equals("Start")) {
             timer.start();
             startAndStopButton.setText("Stop");
-        }else{
-            timer.stop();
-            startAndStopButton.setText("Start");
+        } else {
+            stopGame();
         }
 
     }
 
-    public void resetGame(){
-        timer.stop();
-        startAndStopButton.setText("Start");
+    public void resetGame() {
+        stopGame();
         BoardController.getInstance().clear();
         antsController.clear();
         cycle.setValue(0);
     }
 
+    public void stopAndClearAnts() {
+        stopGame();
+        antsController.clear();
+    }
 
+    public void stopGame() {
+        timer.stop();
+        startAndStopButton.setText("Start");
+    }
+
+    public void clear(){
+        stopGame();
+        BoardController.getInstance().clear();
+    }
 }
