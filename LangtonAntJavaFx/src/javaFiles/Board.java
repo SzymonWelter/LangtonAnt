@@ -3,6 +3,11 @@ package javaFiles;
 
 import javafx.scene.paint.Color;
 
+/**
+ * \brief Klasa reprezentująca tablicę
+ *
+ * Tablica kolorów na podstawie której kolorowny jest canvas
+ */
 public class Board {
 
     private Color[][] board;
