@@ -10,7 +10,7 @@ import javafx.scene.paint.Color;
  */
 public class Board {
 
-    private Color[][] board;
+    private Color[][] board; /*!< Tablica kolorów odwzorowująca canvas, zczytywanie kolorów z canvasa jest nieopłacalne*/
     private int width;
     private int height;
 
@@ -27,8 +27,15 @@ public class Board {
                 board[i][j] = Color.WHITE;
     }
 
-    public Color getBoardColor(int w, int h){
-        return board[w][h];
+    /**
+     * Zwracanie koloru z pozycji tablicy o wsp x, y
+     *
+     * @param x współrzene x
+     * @param y współrzędne y
+     * @return kolor z tablicy o zadanych wsp
+     */
+    public Color getBoardColor(int x, int y) {
+        return board[x][y];
     }
 
     public int getWidth() {
@@ -47,7 +54,10 @@ public class Board {
         this.height = height;
     }
 
-    public void setBoardColor(Color color, int w, int h){
-        board[w][h] = color;
+    /**
+     * Ustawianie pozycji tablicy o zadanych wsp zadanego koloru
+     */
+    public void setBoardColor(Color color, int x, int y) {
+        board[x][y] = color;
     }
 }

@@ -3,7 +3,6 @@ package controllers;
 import javaFiles.Ant;
 import javaFiles.AntObserver;
 import javaFiles.Behavior;
-import javaFiles.Board;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -110,6 +109,13 @@ public class AntsController {
 
     }
 
+    /**
+     * Parsowanie wprowadzanego zachowania
+     *
+     * @param newValue nowe zachowanie
+     * @return poprawność
+     */
+
     private boolean parseBehavior(String newValue) {
 
         if(newValue.length() > new Behavior().getNumberColor())
@@ -128,6 +134,10 @@ public class AntsController {
         return true;
     }
 
+    /**
+     * Dodawanie kwadratu do diagramu kolorów
+     * @param behavior zachowanie na podstawie, którego rysowany jest diagram kolorów
+     */
     private void addRectangle(String behavior) {
 
         canvaBehavior.setWidth(20 + behavior.length() * 30);
@@ -142,22 +152,32 @@ public class AntsController {
         }
     }
 
+    /**
+     * Dodawanie mrówek z losowymi parametrami
+     */
     public void addRandomAnts() {
         int n = 0;
         try {
             n = Integer.parseInt(randomAntsNo.getText());
         } catch (NumberFormatException e) {
-
+            return;
         }
         for (int i = 0; i < n; i++)
             addAntToList(new Ant());
     }
 
+    /**
+     * Dodawanie mrówki do listy
+     * @param ant mrówka która jest dodawana do listy
+     */
     public void addAntToList(Ant ant) {
         ant.setId("#" + ++numOfAnts);
         observableAntList.add(ant);
     }
 
+    /**
+     * Wykonanie jednego cyklu, tzn jednego ruchu dla kazdych mrówek i zaaktualizowanie listy
+     */
     public void onUpdate() {
         for (Ant ant : observableAntList) {
             boardController.setNewPixelColor(ant);
@@ -167,10 +187,16 @@ public class AntsController {
         }
     }
 
+    /**
+     * Przypisanie instancji board controller potrzebna do kolorowania planszy
+     */
     public void setBoardController(BoardController boardController) {
         this.boardController = boardController;
     }
 
+    /**
+     * Przechodzenie pomiędzy trybem edycji i normalnym
+     */
     public void editButtonOnAction() {
         GameController.getInstance().stopGame();
         if (editButton.getText().equals("Edit"))
@@ -183,6 +209,9 @@ public class AntsController {
         }
     }
 
+    /**
+     * Tryb normalny
+     */
     private void normalMode() {
         setVisible(antDirectionTextField, antDirection);
         setVisible(paramYTextField, paramY);
@@ -192,6 +221,9 @@ public class AntsController {
         editButton.setText("Edit");
     }
 
+    /**
+     * Tryb edycji
+     */
     private void editMode() {
         setVisible(antId, idTextField);
         setVisible(antBehavior, behaviorAntTextField);
@@ -201,6 +233,9 @@ public class AntsController {
         editButton.setText("Set");
     }
 
+    /**
+     * Widoczność pól tekstowych i labelów w zależności od trybu
+     */
     private void setVisible(Node visible, Node notVisible) {
         if (notVisible instanceof TextField && visible instanceof Label)
             ((TextField) notVisible).setText(((Label) visible).getText());
@@ -208,6 +243,10 @@ public class AntsController {
         visible.setVisible(false);
         notVisible.setVisible(true);
     }
+
+    /**
+     * edytowanie mrówki zaznaczonej na liście
+     */
 
     private void editAnt() {
         if (behaviorAntTextField.getText().length() > observableAnt.getBehavior().getNumberColor()) {
@@ -221,6 +260,9 @@ public class AntsController {
         observableAnt.setDirection(antDirectionTextField.getText());
     }
 
+    /**
+     * zmiana globalnego zachowania
+     */
     public void changeBehavior() {
         Behavior.GLOBAL_BEHAVIOR = globalBehaviorTextField.getText();
         for (Ant ant : observableAntList) {
@@ -229,6 +271,10 @@ public class AntsController {
         }
     }
 
+    /**
+     * Wyświetlenie parametrów mrówki
+     * @param ant mrówka, której parametry będą wyświetlane
+     */
     public void showAntProperties(Ant ant) {
         paramX.setVisible(true);
         paramY.setVisible(true);
@@ -239,6 +285,9 @@ public class AntsController {
         antDirectionProperty.setValue(ant.getDir());
     }
 
+    /**
+     * Ustawienie nowej obserwowanej mrówki
+     */
     public void checkedAnt() {
         if (observableAnt != null)
             observableAnt.deleteObserver(antObserver);
@@ -247,12 +296,18 @@ public class AntsController {
         observableAnt.addObserver(antObserver);
     }
 
+    /**
+     * Czyszczenie listy mrówek
+     */
     public void clear() {
         numOfAnts = 0;
         observableAntList.clear();
         clearProperties();
     }
 
+    /**
+     * Czyszczenie pól parametrów obserwowanej mrówki
+     */
     private void clearProperties() {
         antId.setText("");
         paramX.setText("");
@@ -261,6 +316,9 @@ public class AntsController {
         antDirection.setText("");
     }
 
+    /**
+     * Usuwanie zaznaczonej mrówki
+     */
     public void removeAnt() {
         observableAntList.remove(antListView.getSelectionModel().getSelectedItem());
         clearProperties();

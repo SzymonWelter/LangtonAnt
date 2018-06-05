@@ -45,6 +45,9 @@ public class Behavior {
         return colorBehavior.get(newColorIndex);
     }
 
+    /**
+     * @return Prawo lub lewo
+     */
     public Character getNextStep() {
         return nextStep;
     }

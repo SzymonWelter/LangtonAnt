@@ -5,11 +5,11 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.converter.NumberStringConverter;
 
@@ -26,6 +26,8 @@ public class GameController {
     private Button startAndStopButton;
     @FXML
     private Label cycleLabel;
+    @FXML
+    private TextField fileName;
     private IntegerProperty cycle;
     private DoubleProperty speedProperty;
     private AntsController antsController;
@@ -61,6 +63,9 @@ public class GameController {
 
     }
 
+    /**
+     * Zatrzymywanie i wznawianie przebiegu symulacji
+     */
     public void theGame() {
 
         if (startAndStopButton.getText().equals("Start")) {
@@ -72,6 +77,9 @@ public class GameController {
 
     }
 
+    /**
+     * Resetowanie gry - czyszczenie tablicy i usuwanie mrówek
+     */
     public void resetGame() {
         stopGame();
         BoardController.getInstance().clear();
@@ -79,22 +87,39 @@ public class GameController {
         cycle.setValue(0);
     }
 
+    /**
+     * Zatrzymanie symulacji i czyszczenie listy mrówek
+     */
     public void stopAndClearAnts() {
         stopGame();
         antsController.clear();
     }
 
+    /**
+     * Zatrzymanie symulacji
+     */
     public void stopGame() {
         timer.stop();
         startAndStopButton.setText("Start");
     }
 
+    /**
+     * Zatrzymywanie symulacji i czyszczenie tablicy
+     */
     public void clear() {
         stopGame();
         BoardController.getInstance().clear();
     }
 
-    public void save(ActionEvent actionEvent) {
-        BoardController.getInstance().savePicture();
+    /**
+     * Zapisywanie zdjęcia tablicy
+     */
+    public void save() {
+        if (!fileName.getText().isEmpty()) {
+            stopGame();
+            BoardController.getInstance().savePicture(fileName.getText());
+            fileName.setText("");
+        } else
+            fileName.setText("example");
     }
 }

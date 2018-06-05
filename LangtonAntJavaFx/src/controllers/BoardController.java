@@ -22,8 +22,8 @@ import java.io.IOException;
  */
 public class BoardController {
 
-    private static final int START_BOARD_WIDTH = 602;
-    private static final int START_BOARD_HEIGHT = 602;
+    private static final int START_BOARD_WIDTH = 602; /*!< Domyślna szerokość talicy*/
+    private static final int START_BOARD_HEIGHT = 602; /*!< Domyślna wysokość tablicy*/
     private static BoardController instance;
 
     @FXML
@@ -31,7 +31,7 @@ public class BoardController {
     @FXML
     private TextField heightField;
     @FXML
-    private Canvas mainCanvas;
+    private Canvas mainCanvas; /*!< Tablica, na której są rysowane przejścia mrówki*/
 
     private Tooltip tooltip = new Tooltip();
     private GraphicsContext gc;
@@ -43,6 +43,11 @@ public class BoardController {
         antsController.setBoardController(this);
     }
 
+    /**
+     * Zwracanie instancji kontrolera
+     *
+     * @return instancja kontrolera
+     */
     public static BoardController getInstance() {
         return instance;
     }
@@ -56,11 +61,17 @@ public class BoardController {
         gc.strokeRect(0, 0, START_BOARD_WIDTH, START_BOARD_HEIGHT);
     }
 
+    /**
+     * Dodanie mrówki o wspolrzednych akcji myszy z canvasem
+     * @param e akcja myszy
+     */
     public void onMouseClicked(javafx.scene.input.MouseEvent e) {
         antsController.addAntToList(new Ant((int) e.getX(), (int) e.getY()));
     }
 
-    @FXML
+    /**
+     * Ustawanie nowych parametrów tablicy
+     */
     public void setNewSizeOfBoard() {
 
         GameController.getInstance().stopAndClearAnts();
@@ -75,6 +86,10 @@ public class BoardController {
         gc.strokeRect(0, 0, width, height);
     }
 
+    /**
+     * Ustawianie nowego koloru tablicy na podstawie wspolrzednych mrowki
+     * @param ant
+     */
     public void setNewPixelColor(Ant ant) {
         int x = ant.getX();
         int y = ant.getY();
@@ -91,23 +106,39 @@ public class BoardController {
         return board.getWidth();
     }
 
+    /**
+     * Czyszczenie tablicy
+     */
     public void clear() {
         board = new Board(board.getWidth(), board.getHeight());
         gc.clearRect(0, 0, board.getWidth(), board.getHeight());
         gc.strokeRect(0, 0, board.getWidth(), board.getHeight());
     }
 
+    /**
+     * Pokazanie wspolrzenej tablicy po najechaniu myszą
+     * @param event akcja myszy
+     */
     public void showPosition(MouseEvent event) {
         tooltip.setText("x: " + event.getX() + " y: " + event.getY());
         tooltip.show(mainCanvas, event.getScreenX() + 10, event.getScreenY() + 10);
     }
 
-    public void hidePosition(MouseEvent event) {
+    /**
+     * Schowanie wspolrzenych
+     */
+
+    public void hidePosition() {
         tooltip.hide();
     }
 
-    public void savePicture() {
-        File file = new File("LangtonAntJavaFx/out/Output");
+    /**
+     * Zapisywanie tablicy jako png
+     *
+     * @param fileName nazwa pliku png
+     */
+    public void savePicture(String fileName) {
+        File file = new File("LangtonAntJavaFx/out/" + fileName);
         WritableImage writableImage = new WritableImage((int) mainCanvas.getWidth(), (int) mainCanvas.getHeight());
         mainCanvas.snapshot(null, writableImage);
         RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);

@@ -193,10 +193,10 @@ public class Ant extends Observable {
      * Wyliczenie reprezentujące zwrot mrówki
      */
     enum Direction {
-        N(new Point(0, -1)),
-        E(new Point(1, 0)),
-        S(new Point(0, 1)),
-        W(new Point(-1, 0));
+        N(new Point(0, -1)), /*!< Kierunek północny o wekorze [0,-1]*/
+        E(new Point(1, 0)), /*!< Kierunek wschodni o wektorze [1,0]*/
+        S(new Point(0, 1)), /*!< Kierunek południowy o wektorze [0,1]*/
+        W(new Point(-1, 0)); /*!< Kierunek zachodni o wektorze [-1,0]*/
 
         Point vector; /*!< Wektor o który poruszy się mrówka */
 
